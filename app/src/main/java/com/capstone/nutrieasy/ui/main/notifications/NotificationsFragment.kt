@@ -1,4 +1,4 @@
-package com.capstone.nutrieasy.ui.notifications
+package com.capstone.nutrieasy.ui.main.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater

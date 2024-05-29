@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.capstone.nutrieasy" />
+                  <option name="mobileSdkAppId" value="1:160426026296:android:162a65e6bffc09d9f90dcd" />
+                  <option name="projectId" value="nutrieasy-prod" />
+                  <option name="projectNumber" value="160426026296" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

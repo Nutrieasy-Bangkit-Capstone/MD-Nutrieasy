@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "160426026296",
+    "project_id": "nutrieasy-prod",
+    "storage_bucket": "nutrieasy-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160426026296:android:162a65e6bffc09d9f90dcd",
+        "android_client_info": {
+          "package_name": "com.capstone.nutrieasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160426026296-se6m5ku3bag4rd071hfq61e64caldhv0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.capstone.nutrieasy",
+            "certificate_hash": "821106814282dadd8f01bd3d931646ac09d50b8c"
+          }
+        },
+        {
+          "client_id": "160426026296-do50gtm3i1co6j2ghtf79u7e31ic7gtv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq50ocxGuZkSag1lA7puZd43v5pZjG34w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160426026296-do50gtm3i1co6j2ghtf79u7e31ic7gtv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
