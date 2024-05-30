@@ -8,4 +8,9 @@
     <string name="logout">Logout</string>
     <string name="profile">Profile</string>
     <string name="scan">Scan</string>
+    <string name="capture_image">Capture Image</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="select_from_gallery">Select from Gallery</string>
+    <string name="cancel">Cancel</string>
+    <string name="camera_failed">Camera failed to take a picture</string>
 </resources>

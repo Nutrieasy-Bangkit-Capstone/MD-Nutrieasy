@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.scan.ScanFragment">
+    tools:context=".ui.main.scan.camera.ScanFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/captureBtn"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:contentDescription="@string/capture_image"
+        app:icon="@drawable/camera_24px"
+        app:iconSize="50dp"
+        app:iconTint="@color/material_dynamic_neutral_variant90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/switchBtn"
+        app:layout_constraintStart_toEndOf="@+id/galleryBtn" />
+
+    <Button
+        android:id="@+id/switchBtn"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:contentDescription="@string/switch_camera"
+        app:icon="@drawable/cameraswitch_24px"
+        app:iconSize="40dp"
+        app:iconTint="@color/material_dynamic_neutral_variant90"
+        app:layout_constraintBottom_toBottomOf="@+id/captureBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/captureBtn" />
+
+    <Button
+        android:id="@+id/galleryBtn"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:contentDescription="@string/select_from_gallery"
+        app:icon="@drawable/photo_library_24px"
+        app:iconSize="40dp"
+        app:iconTint="@color/material_dynamic_neutral_variant90"
+        app:layout_constraintBottom_toBottomOf="@+id/captureBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/captureBtn" />
+
+    <Button
+        android:id="@+id/cancelBtn"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cancel"
+        app:icon="@drawable/baseline_close_24"
+        app:iconSize="40dp"
+        app:iconTint="@color/material_dynamic_neutral_variant90"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

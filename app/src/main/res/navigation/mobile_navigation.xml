@@ -23,9 +23,17 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/scanFragment"
-        android:name="com.capstone.nutrieasy.ui.main.scan.ScanFragment"
+        android:name="com.capstone.nutrieasy.ui.main.scan.camera.ScanFragment"
         android:label="fragment_scan"
-        tools:layout="@layout/fragment_scan" />
+        tools:layout="@layout/fragment_scan" >
+        <action
+            android:id="@+id/action_scanFragment_to_resultFragment"
+            app:destination="@id/resultFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+    </fragment>
     <action
         android:id="@+id/action_global_scanFragment"
         app:destination="@id/scanFragment"
@@ -36,4 +44,18 @@
         app:destination="@id/profileFragment"
         app:enterAnim="@animator/nav_default_enter_anim"
         app:popExitAnim="@animator/nav_default_exit_anim" />
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.capstone.nutrieasy.ui.main.scan.result.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" >
+        <argument
+            android:name="imageUri"
+            app:argType="string" />
+    </fragment>
+    <activity
+        android:id="@+id/activityCamera"
+        android:name="com.capstone.nutrieasy.ui.main.scan.camera.ActivityCamera"
+        android:label="activity_camera"
+        tools:layout="@layout/activity_camera" />
 </navigation>
