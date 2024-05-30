@@ -11,30 +11,29 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.capstone.nutrieasy.ui.main.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.capstone.nutrieasy.ui.main.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <action
-        android:id="@+id/action_global_navigation_dashboard"
-        app:destination="@id/navigation_dashboard"
-        app:enterAnim="@anim/nav_default_enter_anim"
-        app:popExitAnim="@anim/nav_default_exit_anim" />
     <action
         android:id="@+id/action_global_navigation_home"
         app:destination="@id/navigation_home"
         app:enterAnim="@animator/nav_default_enter_anim"
         app:popExitAnim="@animator/nav_default_exit_anim" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.capstone.nutrieasy.ui.main.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.capstone.nutrieasy.ui.main.scan.ScanFragment"
+        android:label="fragment_scan"
+        tools:layout="@layout/fragment_scan" />
     <action
-        android:id="@+id/action_global_navigation_notifications"
-        app:destination="@id/navigation_notifications"
+        android:id="@+id/action_global_scanFragment"
+        app:destination="@id/scanFragment"
+        app:enterAnim="@animator/nav_default_enter_anim"
+        app:popExitAnim="@animator/nav_default_exit_anim" />
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment"
         app:enterAnim="@animator/nav_default_enter_anim"
         app:popExitAnim="@animator/nav_default_exit_anim" />
 </navigation>

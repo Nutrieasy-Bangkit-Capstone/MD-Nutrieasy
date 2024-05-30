@@ -27,12 +27,12 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.action_global_navigation_home)
                     true
                 }
-                R.id.navigation_dashboard -> {
-                    navController.navigate(R.id.action_global_navigation_dashboard)
+                R.id.navigation_scan -> {
+                    navController.navigate(R.id.action_global_scanFragment)
                     true
                 }
-                R.id.navigation_notifications -> {
-                    navController.navigate(R.id.action_global_navigation_notifications)
+                R.id.navigation_profile -> {
+                    navController.navigate(R.id.action_global_profileFragment)
                     true
                 }
                 else -> true

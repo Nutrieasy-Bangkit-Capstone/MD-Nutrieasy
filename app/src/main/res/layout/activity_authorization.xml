@@ -5,14 +5,29 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".ui.authorization.AuthorizationActivity">
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:id="@+id/signinBtn"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:paddingVertical="16dp"
         android:text="@string/google_signin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loadingIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:indicatorColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/signinBtn"
+        app:layout_constraintEnd_toEndOf="@+id/signinBtn"
+        app:layout_constraintStart_toStartOf="@+id/signinBtn"
+        app:layout_constraintTop_toTopOf="@+id/signinBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
