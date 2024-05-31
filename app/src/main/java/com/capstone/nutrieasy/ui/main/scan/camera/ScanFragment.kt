@@ -1,6 +1,7 @@
 package com.capstone.nutrieasy.ui.main.scan.camera
 
 import android.Manifest
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
@@ -38,6 +40,16 @@ class ScanFragment : Fragment() {
         if(!isGranted){
             showToast("Permissions rejected")
             findNavController().navigate(ScanFragmentDirections.actionGlobalNavigationHome())
+        }
+    }
+
+    private val launcherGallery = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ){ uri: Uri? ->
+        if(uri != null){
+            transitionToResult(uri)
+        }else{
+            showToast("No photo have been selected yet")
         }
     }
     override fun onCreateView(
@@ -94,8 +106,20 @@ class ScanFragment : Fragment() {
             startCamera()
         }
 
+        binding.galleryBtn.setOnClickListener {
+            launcherGallery.launch(
+                PickVisualMediaRequest(
+                    ActivityResultContracts.PickVisualMedia.ImageOnly
+                )
+            )
+        }
+
         binding.captureBtn.setOnClickListener {
             takePhoto()
+        }
+
+        binding.cancelBtn.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
@@ -133,8 +157,7 @@ class ScanFragment : Fragment() {
             ContextCompat.getMainExecutor(requireContext()),
             object: ImageCapture.OnImageSavedCallback{
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val directions = ScanFragmentDirections.actionScanFragmentToResultFragment(output.savedUri.toString())
-                    findNavController().navigate(directions)
+                    output.savedUri?.let { transitionToResult(it) }
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -142,6 +165,11 @@ class ScanFragment : Fragment() {
                 }
             }
         )
+    }
+
+    private fun transitionToResult(uri: Uri){
+        val directions = ScanFragmentDirections.actionScanFragmentToResultFragment(uri.toString())
+        findNavController().navigate(directions)
     }
 
     private fun showToast(text: String){
