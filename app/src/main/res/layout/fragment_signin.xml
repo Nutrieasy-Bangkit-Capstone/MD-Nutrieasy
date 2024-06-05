@@ -59,16 +59,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/signupButton"
+        android:id="@+id/signinBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="5dp"
         android:paddingVertical="14dp"
         android:text="@string/sign_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/errorTv" />
 
     <TextView
         android:id="@+id/textView2"
@@ -126,9 +126,9 @@
         android:layout_marginTop="8dp"
         android:text="@string/or"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/signupButton"
-        app:layout_constraintStart_toStartOf="@+id/signupButton"
-        app:layout_constraintTop_toBottomOf="@+id/signupButton" />
+        app:layout_constraintEnd_toEndOf="@+id/signinBtn"
+        app:layout_constraintStart_toStartOf="@+id/signinBtn"
+        app:layout_constraintTop_toBottomOf="@+id/signinBtn" />
 
     <Button
         android:id="@+id/googleSigninBtn"
@@ -142,12 +142,10 @@
         app:icon="@drawable/google_icon"
         app:iconGravity="textStart"
         app:iconTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progressBar"
@@ -156,9 +154,33 @@
         android:indeterminate="true"
         app:indicatorColor="@color/white"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/signupButton"
-        app:layout_constraintEnd_toEndOf="@+id/signupButton"
-        app:layout_constraintStart_toStartOf="@+id/signupButton"
-        app:layout_constraintTop_toTopOf="@+id/signupButton" />
+        app:layout_constraintBottom_toBottomOf="@+id/signinBtn"
+        app:layout_constraintEnd_toEndOf="@+id/signinBtn"
+        app:layout_constraintStart_toStartOf="@+id/signinBtn"
+        app:layout_constraintTop_toTopOf="@+id/signinBtn" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/googleProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/googleSigninBtn"
+        app:layout_constraintEnd_toEndOf="@+id/googleSigninBtn"
+        app:layout_constraintStart_toStartOf="@+id/googleSigninBtn"
+        app:layout_constraintTop_toTopOf="@+id/googleSigninBtn" />
+
+    <TextView
+        android:id="@+id/errorTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

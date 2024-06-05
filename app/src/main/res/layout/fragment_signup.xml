@@ -75,20 +75,17 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
     <Button
-        android:id="@+id/signupButton"
+        android:id="@+id/signupBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:paddingVertical="14dp"
         android:text="@string/create_account"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/errorTv" />
 
     <TextView
         android:id="@+id/textView2"
@@ -102,7 +99,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupButton" />
+        app:layout_constraintTop_toBottomOf="@+id/signupBtn" />
 
     <TextView
         android:id="@+id/signinNavigation"
@@ -125,9 +122,21 @@
         android:indeterminate="true"
         app:indicatorColor="@color/white"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/signupButton"
-        app:layout_constraintEnd_toEndOf="@+id/signupButton"
-        app:layout_constraintStart_toStartOf="@+id/signupButton"
-        app:layout_constraintTop_toTopOf="@+id/signupButton" />
+        app:layout_constraintBottom_toBottomOf="@+id/signupBtn"
+        app:layout_constraintEnd_toEndOf="@+id/signupBtn"
+        app:layout_constraintStart_toStartOf="@+id/signupBtn"
+        app:layout_constraintTop_toTopOf="@+id/signupBtn" />
+
+    <TextView
+        android:id="@+id/errorTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:visibility="invisible"
+        android:textColor="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
