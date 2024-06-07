@@ -1,10 +1,12 @@
 package com.capstone.nutrieasy.ui.authorization.signin
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.nutrieasy.data.repository.AuthRepository
+import com.capstone.nutrieasy.data.repository.SessionRepository
 import com.capstone.nutrieasy.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SigninFragmentViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val sessionRepository: SessionRepository
 ): ViewModel() {
     var email: String = ""
     var password: String = ""
@@ -45,12 +48,24 @@ class SigninFragmentViewModel @Inject constructor(
                     )
                 }
                 is Result.Success -> {
-                    email = ""
-                    password = ""
-                    _viewState.value = _viewState.value?.copy(
-                        isLoading = false,
-                        isSuccess = true
-                    )
+                    val tokenResult = authRepository.getToken(email, result.data.displayName ?: email, result.data.uid)
+                    when(tokenResult){
+                        is Result.Error -> {
+                            _viewState.value = _viewState.value?.copy(
+                                isLoading = false,
+                                isError = true,
+                                errorMessage = tokenResult.message
+                            )
+                        }
+                        is Result.Success -> {
+                            Log.d("Token Testing", tokenResult.data)
+                            sessionRepository.saveSession(tokenResult.data)
+                            _viewState.value = _viewState.value?.copy(
+                                isLoading = false,
+                                isSuccess = true
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -75,11 +90,24 @@ class SigninFragmentViewModel @Inject constructor(
                     )
                 }
                 is Result.Success -> {
-                    _viewState.value = _viewState.value?.copy(
-                        isGoogleLoading = false,
-                        isSuccess = true,
-                        isError = false
-                    )
+                    val tokenResult = authRepository.getToken(email, result.data.displayName ?: email, result.data.uid)
+                    when(tokenResult){
+                        is Result.Error -> {
+                            _viewState.value = _viewState.value?.copy(
+                                isLoading = false,
+                                isError = true,
+                                errorMessage = tokenResult.message
+                            )
+                        }
+                        is Result.Success -> {
+                            email = ""
+                            password = ""
+                            _viewState.value = _viewState.value?.copy(
+                                isLoading = false,
+                                isSuccess = true
+                            )
+                        }
+                    }
                 }
             }
         }

@@ -1,6 +1,10 @@
 package com.capstone.nutrieasy.data.response
 
+import com.google.gson.annotations.SerializedName
+
 data class ErrorResponse(
-    val error: Boolean? = null,
-    val message: String? = null
+    @field:SerializedName("error")
+    val error: Boolean,
+    @field:SerializedName("message")
+    val message: String
 )

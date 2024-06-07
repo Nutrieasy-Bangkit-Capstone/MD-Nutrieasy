@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.capstone.nutrieasy.R
 import com.capstone.nutrieasy.databinding.FragmentProfileBinding
 import com.capstone.nutrieasy.ui.authorization.AuthorizationActivity
@@ -13,10 +14,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var auth: FirebaseAuth
+    private val viewModel by viewModels<ProfileFragmentViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,8 +56,9 @@ class ProfileFragment : Fragment() {
 
     private fun setupAction(){
         binding.logoutBtn.setOnClickListener {
-            auth.signOut()
-            startActivity(Intent(requireActivity(), AuthorizationActivity::class.java))
+            viewModel.logout()
+            val intent = Intent(requireContext(), AuthorizationActivity::class.java)
+            startActivity(intent)
             requireActivity().finish()
         }
     }

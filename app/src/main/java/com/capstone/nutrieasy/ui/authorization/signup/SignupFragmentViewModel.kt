@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.nutrieasy.data.repository.AuthRepository
+import com.capstone.nutrieasy.data.repository.SessionRepository
 import com.capstone.nutrieasy.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignupFragmentViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val sessionRepository: SessionRepository
 ) : ViewModel() {
     var name: String = ""
     var email: String = ""
@@ -56,11 +58,24 @@ class SignupFragmentViewModel @Inject constructor(
                             )
                         }
                         is Result.Success -> {
-                            _viewState.value = _viewState.value?.copy(
-                                isLoading = false,
-                                isSuccess = true,
-                                data = result.data
-                            )
+                            val tokenResult = authRepository.getToken(email, name, result.data.uid)
+                            when(tokenResult){
+                                is Result.Error -> {
+                                    _viewState.value = _viewState.value?.copy(
+                                        isLoading = false,
+                                        isError = true,
+                                        errorMessage = tokenResult.message
+                                    )
+                                }
+                                is Result.Success -> {
+                                    sessionRepository.saveSession(tokenResult.data)
+                                    _viewState.value = _viewState.value?.copy(
+                                        isLoading = false,
+                                        isSuccess = true,
+                                        data = result.data
+                                    )
+                                }
+                            }
                         }
                     }
                 }

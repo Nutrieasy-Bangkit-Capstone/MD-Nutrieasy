@@ -1,18 +1,21 @@
 package com.capstone.nutrieasy.data.repository
 
-import com.capstone.nutrieasy.data.api.ApiService
+import com.capstone.nutrieasy.data.api.AuthService
+import com.capstone.nutrieasy.data.response.ErrorResponse
 import com.capstone.nutrieasy.util.Result
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.userProfileChangeRequest
-import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.coroutines.tasks.await
+import retrofit2.HttpException
 
 class AuthRepository(
     private val auth: FirebaseAuth,
-    private val apiService: ApiService
+    private val apiService: AuthService
 ) {
     suspend fun firebaseAuthWithGoogle(idToken: String): Result<FirebaseUser> {
         val credential: AuthCredential = GoogleAuthProvider.getCredential(idToken, null)
@@ -58,5 +61,23 @@ class AuthRepository(
         }catch(exc: Exception){
             Result.Error(exc.message ?: "Failed to change display name")
         }
+    }
+
+    suspend fun getToken(email: String, fullname: String, uid: String): Result<String>{
+        return try{
+            val body = JsonObject().apply {
+                addProperty("email", email)
+                addProperty("fullName", fullname)
+                addProperty("uid", uid)
+            }
+            val result = apiService.login(body)
+            Result.Success(result.token)
+        }catch (exc: Exception){
+            Result.Error(exc.message ?: "Failed to get token")
+        }
+    }
+
+    fun logout(){
+        auth.signOut()
     }
 }
