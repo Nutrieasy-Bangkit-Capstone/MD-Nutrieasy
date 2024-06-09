@@ -22,7 +22,7 @@ class NutrientResultAdapter(
             binding.apply {
                 val color = context.getColor(colors[position % colors.size])
                 nameTv.text = item.name
-                valueTv.text = "${item.value}${item.unit} / 100g"
+                valueTv.text = "${item.value}${item.unit}"
                 valueTv.setTextColor(color)
                 progressIndicator.progress = item.value.toInt()
                 progressIndicator.max = 100

@@ -99,6 +99,7 @@ class ResultFragment : Fragment() {
                         val nutrientList = data?.nutrientsDetailList?.map {
                             it.copy(value = it.value * size)
                         }
+                        binding.amountTv.text = size.toString()
                         adapter?.submitList(nutrientList)
                     }
                 }

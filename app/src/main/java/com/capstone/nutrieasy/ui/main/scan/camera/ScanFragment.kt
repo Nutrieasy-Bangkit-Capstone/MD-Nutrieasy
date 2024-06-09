@@ -34,13 +34,11 @@ import com.capstone.nutrieasy.databinding.FragmentScanBinding
 import com.capstone.nutrieasy.util.createCustomTempFile
 import com.capstone.nutrieasy.util.cropImage
 import com.capstone.nutrieasy.util.isPermissionGranted
-import com.capstone.nutrieasy.util.rotate
+import com.capstone.nutrieasy.util.rotateImageIfRequired
 import com.capstone.nutrieasy.util.saveImage
 import com.capstone.nutrieasy.util.uriToFile
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 class ScanFragment : Fragment() {
     private lateinit var binding: FragmentScanBinding
@@ -203,7 +201,7 @@ class ScanFragment : Fragment() {
                     val bitmap = BitmapFactory.decodeFile(
                         uriToFile(output.savedUri!!, requireContext()).absolutePath
                     )
-                    val rotatedBitmap = bitmap.rotate(90)
+                    val rotatedBitmap = rotateImageIfRequired(requireContext(), bitmap, output.savedUri!!)
                     Log.d("Preview Size", "Width preview: ${binding.viewFinder.width} Height preview: ${binding.viewFinder.height}")
 //                    showToast("Width border: ${binding.scanBorder.width} Height border: ${binding.scanBorder.height}")
                     val croppedImage = cropImage(
@@ -220,6 +218,8 @@ class ScanFragment : Fragment() {
             }
         )
     }
+
+
 
     private fun transitionToResult(uri: Uri){
         val directions = ScanFragmentDirections.actionScanFragmentToResultFragment(uri.toString())
