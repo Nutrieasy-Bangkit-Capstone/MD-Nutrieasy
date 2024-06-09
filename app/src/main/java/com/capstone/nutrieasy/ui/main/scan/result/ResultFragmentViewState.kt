@@ -7,5 +7,6 @@ data class ResultFragmentViewState(
     var isSuccess: Boolean,
     var isError: Boolean,
     var errorMessage: String,
-    var data: ItemData?
+    var data: ItemData?,
+    var size: Int
 )

@@ -27,7 +27,8 @@ class ResultFragmentViewModel @Inject constructor(
             isSuccess = false,
             isError = false,
             errorMessage = "",
-            data = null
+            data = null,
+            size = 1
         )
     )
     val viewState: LiveData<ResultFragmentViewState> = _viewState
@@ -65,5 +66,11 @@ class ResultFragmentViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun changeSize(newSize: Int){
+        _viewState.value = _viewState.value?.copy(
+            size = newSize
+        )
     }
 }

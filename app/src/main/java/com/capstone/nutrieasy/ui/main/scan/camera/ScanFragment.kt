@@ -1,8 +1,11 @@
 package com.capstone.nutrieasy.ui.main.scan.camera
 
 import android.Manifest
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.util.Rational
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.OrientationEventListener
@@ -15,19 +18,29 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
+import androidx.camera.core.UseCaseGroup
+import androidx.camera.core.ViewPort
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.navigation.fragment.findNavController
 import com.capstone.nutrieasy.R
 import com.capstone.nutrieasy.databinding.FragmentScanBinding
 import com.capstone.nutrieasy.util.createCustomTempFile
+import com.capstone.nutrieasy.util.cropImage
 import com.capstone.nutrieasy.util.isPermissionGranted
+import com.capstone.nutrieasy.util.rotate
+import com.capstone.nutrieasy.util.saveImage
+import com.capstone.nutrieasy.util.uriToFile
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class ScanFragment : Fragment() {
     private lateinit var binding: FragmentScanBinding
@@ -38,10 +51,23 @@ class ScanFragment : Fragment() {
         ActivityResultContracts.RequestPermission()
     ){ isGranted ->
         if(!isGranted){
-            showToast("Permissions rejected")
+            showToast("Camera permissions rejected")
             findNavController().navigate(ScanFragmentDirections.actionGlobalNavigationHome())
         }
     }
+
+//    private val requestStoragePermissions = registerForActivityResult(
+//        ActivityResultContracts.RequestMultiplePermissions()
+//    ){ permissions ->
+//        for(permission in permissions)
+//       if(permission.key == Manifest.permission.WRITE_EXTERNAL_STORAGE){
+//           showToast("Write external storage permissions rejected")
+//           findNavController().navigate(ScanFragmentDirections.actionGlobalNavigationHome())
+//       }else{
+//           showToast("Read external storage permissions rejected")
+//           findNavController().navigate(ScanFragmentDirections.actionGlobalNavigationHome())
+//       }
+//    }
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -78,7 +104,7 @@ class ScanFragment : Fragment() {
         when{
             isPermissionGranted(requireContext(), Manifest.permission.CAMERA) -> showToast("Camera permission granted")
             ActivityCompat.shouldShowRequestPermissionRationale(
-                requireActivity(), Manifest.permission.CAMERA
+                requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE
             ) -> {
                 val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setTitle("Permission Required")
@@ -134,12 +160,28 @@ class ScanFragment : Fragment() {
                     it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
                 }
             imageCapture = ImageCapture.Builder().build()
+//            val imageAnalyzer = ImageAnalysis.Builder()
+//                .setTargetRotation(binding.viewFinder.display.rotation)
+//                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+//                .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
+//                .build()
+//            imageAnalyzer.setAnalyzer(Executors.newSingleThreadExecutor()){ image ->
+//
+//            }
+//            val viewPort = ViewPort.Builder(Rational(1, 1), Surface.ROTATION_0).build()
+//            val useCaseGroup = UseCaseGroup.Builder()
+//                .addUseCase(preview)
+//                .addUseCase(imageCapture!!)
+//                .setViewPort(viewPort)
+//                .build()
 
             try {
                 cameraProvider.unbindAll()
+//                cameraProvider.bindToLifecycle(
+//                    this, cameraSelector, useCaseGroup
+//                )
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector,
-                    preview, imageCapture
+                    this, cameraSelector, preview, imageCapture
                 )
             }catch(exc: Exception){
                 showToast(getString(R.string.camera_failed))
@@ -149,6 +191,7 @@ class ScanFragment : Fragment() {
 
     private fun takePhoto(){
         val imageCapture = imageCapture ?: return
+
         val photoFile = createCustomTempFile(requireContext())
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
@@ -157,7 +200,18 @@ class ScanFragment : Fragment() {
             ContextCompat.getMainExecutor(requireContext()),
             object: ImageCapture.OnImageSavedCallback{
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    output.savedUri?.let { transitionToResult(it) }
+                    val bitmap = BitmapFactory.decodeFile(
+                        uriToFile(output.savedUri!!, requireContext()).absolutePath
+                    )
+                    val rotatedBitmap = bitmap.rotate(90)
+                    Log.d("Preview Size", "Width preview: ${binding.viewFinder.width} Height preview: ${binding.viewFinder.height}")
+//                    showToast("Width border: ${binding.scanBorder.width} Height border: ${binding.scanBorder.height}")
+                    val croppedImage = cropImage(
+                        rotatedBitmap, binding.viewFinder, binding.scanBorder
+                    )
+                    val uri = saveImage(croppedImage, requireContext())
+                    transitionToResult(uri)
+//                    output.savedUri?.let { transitionToResult(it) }
                 }
 
                 override fun onError(exception: ImageCaptureException) {

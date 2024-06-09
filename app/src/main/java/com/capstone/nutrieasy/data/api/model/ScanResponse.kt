@@ -26,7 +26,7 @@ data class NutrientsDetailListItem(
 	val name: String,
 
 	@field:SerializedName("value")
-	val value: Any
+	val value: Float
 )
 
 data class ItemData(

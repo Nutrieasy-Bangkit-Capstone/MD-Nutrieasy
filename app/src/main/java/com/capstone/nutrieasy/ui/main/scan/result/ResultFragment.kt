@@ -10,7 +10,9 @@ import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.nutrieasy.R
+import com.capstone.nutrieasy.data.api.model.NutrientsDetailListItem
 import com.capstone.nutrieasy.databinding.FragmentResultBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +27,7 @@ class ResultFragment : Fragment() {
     private val navArgs: ResultFragmentArgs by navArgs()
     private val viewModel by viewModels<ResultFragmentViewModel>()
     private lateinit var auth: FirebaseAuth
+    private var adapter: NutrientResultAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,14 +42,33 @@ class ResultFragment : Fragment() {
         auth = Firebase.auth
 
         viewModel.scan(auth.uid!!, navArgs.imageUri.toUri(), requireContext())
-        setupState()
         setupView()
+        setupAction()
+        setupState()
     }
 
     private fun setupView(){
         binding.foodIv.setImageURI(
             navArgs.imageUri.toUri()
         )
+
+        adapter = NutrientResultAdapter(requireContext())
+        val layout = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = layout
+    }
+
+    private fun setupAction(){
+        binding.minBtn.setOnClickListener {
+            viewModel.changeSize(
+                viewModel.viewState.value?.size?.minus(1) ?: 0
+            )
+        }
+        binding.addBtn.setOnClickListener {
+            viewModel.changeSize(
+                viewModel.viewState.value?.size?.plus(1) ?: 0
+            )
+        }
     }
 
     private fun setupState(){
@@ -70,6 +92,14 @@ class ResultFragment : Fragment() {
                     }
                     isSuccess -> {
                         binding.nameTv.text = data?.foodName
+                        val calorie = data?.nutrientsDetailList?.first {
+                            it.name.contains("Energy") && it.unit == "kcal"
+                        }
+                        binding.calorieTv.text = "${calorie?.value?.times(size)}Kcal / ${data?.servingWeightGrams?.times(size)}"
+                        val nutrientList = data?.nutrientsDetailList?.map {
+                            it.copy(value = it.value * size)
+                        }
+                        adapter?.submitList(nutrientList)
                     }
                 }
             }
@@ -79,12 +109,12 @@ class ResultFragment : Fragment() {
     private fun showLoading(){
         binding.progressBar.visibility = View.VISIBLE
         binding.loadingTv.visibility = View.VISIBLE
-        binding.nameTv.visibility = View.INVISIBLE
+        binding.dataLayout.visibility = View.INVISIBLE
     }
 
     private fun hideLoading(){
         binding.progressBar.visibility = View.INVISIBLE
         binding.loadingTv.visibility = View.INVISIBLE
-        binding.nameTv.visibility = View.VISIBLE
+        binding.dataLayout.visibility = View.VISIBLE
     }
 }
