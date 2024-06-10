@@ -54,24 +54,20 @@ class ScanFragment : Fragment() {
         }
     }
 
-//    private val requestStoragePermissions = registerForActivityResult(
-//        ActivityResultContracts.RequestMultiplePermissions()
-//    ){ permissions ->
-//        for(permission in permissions)
-//       if(permission.key == Manifest.permission.WRITE_EXTERNAL_STORAGE){
-//           showToast("Write external storage permissions rejected")
-//           findNavController().navigate(ScanFragmentDirections.actionGlobalNavigationHome())
-//       }else{
-//           showToast("Read external storage permissions rejected")
-//           findNavController().navigate(ScanFragmentDirections.actionGlobalNavigationHome())
-//       }
-//    }
-
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ){ uri: Uri? ->
         if(uri != null){
-            transitionToResult(uri)
+            val bitmap = BitmapFactory.decodeFile(
+                uriToFile(uri, requireContext()).absolutePath
+            )
+            val rotatedBitmap = rotateImageIfRequired(requireContext(), bitmap, uri)
+            Log.d("Preview Size", "Width preview: ${binding.viewFinder.width} Height preview: ${binding.viewFinder.height}")
+            val croppedImage = cropImage(
+                rotatedBitmap, binding.viewFinder, binding.scanBorder
+            )
+            val newUri = saveImage(croppedImage, requireContext())
+            transitionToResult(newUri)
         }else{
             showToast("No photo have been selected yet")
         }
@@ -94,8 +90,6 @@ class ScanFragment : Fragment() {
 
     private fun setUpView(){
         requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.GONE
-//        val window = requireActivity().window
-//        window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.black)
     }
 
     private fun requestingPermission(){
@@ -158,20 +152,6 @@ class ScanFragment : Fragment() {
                     it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
                 }
             imageCapture = ImageCapture.Builder().build()
-//            val imageAnalyzer = ImageAnalysis.Builder()
-//                .setTargetRotation(binding.viewFinder.display.rotation)
-//                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-//                .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
-//                .build()
-//            imageAnalyzer.setAnalyzer(Executors.newSingleThreadExecutor()){ image ->
-//
-//            }
-//            val viewPort = ViewPort.Builder(Rational(1, 1), Surface.ROTATION_0).build()
-//            val useCaseGroup = UseCaseGroup.Builder()
-//                .addUseCase(preview)
-//                .addUseCase(imageCapture!!)
-//                .setViewPort(viewPort)
-//                .build()
 
             try {
                 cameraProvider.unbindAll()

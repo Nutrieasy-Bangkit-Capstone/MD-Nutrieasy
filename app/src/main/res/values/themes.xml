@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Nutrieasy" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 
     <style name="RoundedImage" parent="">

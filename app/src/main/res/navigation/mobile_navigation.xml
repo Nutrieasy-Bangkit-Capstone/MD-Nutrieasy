@@ -20,7 +20,15 @@
         android:id="@+id/profileFragment"
         android:name="com.capstone.nutrieasy.ui.main.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/scanFragment"
         android:name="com.capstone.nutrieasy.ui.main.scan.camera.ScanFragment"
@@ -58,4 +66,20 @@
         android:name="com.capstone.nutrieasy.ui.main.scan.camera.ActivityCamera"
         android:label="activity_camera"
         tools:layout="@layout/activity_camera" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.capstone.nutrieasy.ui.main.editprofile.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="profileData"
+            app:argType="com.capstone.nutrieasy.data.api.model.User" />
+    </fragment>
 </navigation>

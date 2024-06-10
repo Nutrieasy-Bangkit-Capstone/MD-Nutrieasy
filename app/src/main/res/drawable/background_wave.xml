@@ -1,0 +1,12 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/sea_salt_white" />
+        </shape>
+    </item>
+    <item>
+        <bitmap
+            android:src="@drawable/blob_haikei__1_"
+            android:tileMode="disabled" />
+    </item>
+</layer-list>

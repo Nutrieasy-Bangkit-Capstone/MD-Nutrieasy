@@ -25,4 +25,15 @@
     <string name="todo_fruit_picture">TODO Fruit PICTURE</string>
     <string name="scanning">Scanning...</string>
     <string name="_25">25</string>
+    <string name="nutrieasy">Nutrieasy</string>
+    <string name="track_your_nutrition_easier_with_nutrieasy">Track your nutrition easier \nwith Nutrieasy</string>
+    <string name="birth_of_date">Birth of Date</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="gender">Gender</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="display_name">Display Name</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 </resources>

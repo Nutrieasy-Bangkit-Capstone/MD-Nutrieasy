@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="16dp"
-    android:paddingVertical="32dp"
+    android:paddingVertical="16dp"
+    android:backgroundTint="@color/sea_salt_white"
     tools:context=".ui.main.scan.result.ResultFragment">
 
 
@@ -129,8 +130,8 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/foodIv"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/RoundedImage15"
@@ -140,7 +141,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="sans-serif-black"
             android:text="Nutrient Values"
             android:textSize="26sp"
@@ -200,7 +201,7 @@
                     android:id="@+id/dailyCaloriePi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     app:indicatorSize="60dp"
                     app:layout_constraintEnd_toStartOf="@+id/dailyProteinPi"
                     app:layout_constraintHorizontal_bias="0.5"

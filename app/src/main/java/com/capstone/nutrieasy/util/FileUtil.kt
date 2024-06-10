@@ -7,6 +7,7 @@ import android.media.ExifInterface
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import androidx.core.net.toUri
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
@@ -76,7 +77,8 @@ fun cropImage(bitmap: Bitmap, frame: View, reference: View): ByteArray {
 //    return stream.toByteArray()
     val scaleFactor: Double; val widthOffset: Double; val heightOffset: Double
 
-    if (frame.height * bitmap.width > frame.height * bitmap.width) {
+    Log.d("Test Crop", "value: ${frame.height * bitmap.width <= frame.width * bitmap.height}")
+    if (frame.height * bitmap.width <= frame.width * bitmap.height) {
         scaleFactor = (bitmap.width).toDouble() / (frame.width).toDouble()
         widthOffset = 0.0
         heightOffset = (bitmap.height - frame.height * scaleFactor) / 2

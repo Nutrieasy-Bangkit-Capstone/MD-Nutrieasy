@@ -50,6 +50,10 @@ class AuthRepository(
         }
     }
 
+    fun getFirebaseUser(): FirebaseUser?{
+        return auth.currentUser
+    }
+
     suspend fun updateUserDisplayName(user: FirebaseUser, name: String): Result<String>{
         return try{
             user.updateProfile(
