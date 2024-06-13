@@ -3,6 +3,7 @@ package com.capstone.nutrieasy.data.repository
 import com.capstone.nutrieasy.data.api.AppService
 import com.capstone.nutrieasy.data.api.model.ItemData
 import com.capstone.nutrieasy.util.Result
+import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -15,6 +16,24 @@ class ServiceRepository(
             Result.Success(result.data)
         }catch(exc: Exception){
             Result.Error(exc.message ?: "Failed to scan the image")
+        }
+    }
+
+    suspend fun track(
+        uid: String, itemName: String,
+        imageUrl: String, quantity: Int
+    ): Result<String>{
+        return try {
+            val body = JsonObject().apply {
+                addProperty("uid", uid)
+                addProperty("foodName", itemName)
+                addProperty("imageUrl", imageUrl)
+                addProperty("quantity", quantity)
+            }
+            val result = appService.track(body)
+            Result.Success(result.message)
+        }catch (exc: Exception){
+            Result.Error(exc.message ?: "Failed to track, please try again")
         }
     }
 }

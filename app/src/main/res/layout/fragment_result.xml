@@ -17,7 +17,7 @@
         android:indeterminate="true"
         android:visibility="invisible"
         app:indicatorColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/loadingTv"
+        app:layout_constraintBottom_toBottomOf="@+id/dataLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,6 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/progressBar"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/progressBar"
@@ -48,6 +47,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/trackProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            android:elevation="1dp"
+            app:indicatorColor="@color/sea_salt_white"
+            app:layout_constraintBottom_toBottomOf="@id/trackBtn"
+            app:layout_constraintEnd_toEndOf="@id/trackBtn"
+            app:layout_constraintStart_toStartOf="@id/trackBtn"
+            app:layout_constraintTop_toTopOf="@id/trackBtn" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -340,7 +352,7 @@
             android:id="@+id/trackBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Track"
+            android:text="@string/track"
             android:paddingVertical="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

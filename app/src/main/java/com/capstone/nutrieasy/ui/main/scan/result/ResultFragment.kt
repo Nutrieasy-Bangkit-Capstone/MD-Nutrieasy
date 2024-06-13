@@ -1,22 +1,23 @@
 package com.capstone.nutrieasy.ui.main.scan.result
 
-import android.Manifest
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.nutrieasy.R
-import com.capstone.nutrieasy.data.api.model.NutrientsDetailListItem
 import com.capstone.nutrieasy.databinding.FragmentResultBinding
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButton.IconGravity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,6 +70,9 @@ class ResultFragment : Fragment() {
                 viewModel.viewState.value?.size?.plus(1) ?: 0
             )
         }
+        binding.trackBtn.setOnClickListener {
+            viewModel.track()
+        }
     }
 
     private fun setupState(){
@@ -77,6 +81,10 @@ class ResultFragment : Fragment() {
                 if(isLoading){
                     showLoading()
                 }else hideLoading()
+
+                if(isTrackLoading){
+                    showTrackLoading()
+                }else hideTrackLoading()
 
                 when{
                     isError -> {
@@ -102,6 +110,27 @@ class ResultFragment : Fragment() {
                         binding.amountTv.text = size.toString()
                         adapter?.submitList(nutrientList)
                     }
+
+                }
+
+                when{
+                    isTrackError -> {
+                        val dialog = MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Error")
+                            .setMessage(errorMessage)
+                            .setIcon(R.drawable.error_24px)
+                            .setPositiveButton("Ok") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                        dialog.show()
+                    }
+                    isTrackSuccess -> {
+                        val trackBtn = (binding.trackBtn as MaterialButton)
+                        trackBtn.text = getString(R.string.tracked)
+                        trackBtn.setIconResource(R.drawable.ic_check)
+                        trackBtn.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_END
+                        trackBtn.isEnabled = false
+                    }
                 }
             }
         }
@@ -117,5 +146,15 @@ class ResultFragment : Fragment() {
         binding.progressBar.visibility = View.INVISIBLE
         binding.loadingTv.visibility = View.INVISIBLE
         binding.dataLayout.visibility = View.VISIBLE
+    }
+
+    private fun showTrackLoading(){
+        binding.trackProgressBar.visibility = View.VISIBLE
+        binding.trackBtn.text = ""
+    }
+
+    private fun hideTrackLoading(){
+        binding.trackProgressBar.visibility = View.INVISIBLE
+        binding.trackBtn.text = getString(R.string.track)
     }
 }
