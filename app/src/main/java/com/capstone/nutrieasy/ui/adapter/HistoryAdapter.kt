@@ -40,7 +40,10 @@ class HistoryAdapter@Inject constructor(): PagingDataAdapter<HistoryResponse, Hi
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.bindData(getItem(position) ?: HistoryResponse())
+        val item = getItem(position)
+        if (item != null) {
+            holder.bindData(item)
+        }
     }
 
     inner class HistoryViewHolder(private val view: ItemListBinding) : RecyclerView.ViewHolder(view.root) {

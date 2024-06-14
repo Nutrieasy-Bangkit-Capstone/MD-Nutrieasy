@@ -15,19 +15,23 @@ import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.nutrieasy.R
 import com.capstone.nutrieasy.data.response.HistoryResponse
 import com.capstone.nutrieasy.databinding.FragmentHomeBinding
 import com.capstone.nutrieasy.ui.adapter.HistoryAdapter
 import com.capstone.nutrieasy.ui.adapter.LoadingStateAdapter
 import com.capstone.nutrieasy.ui.authorization.AuthorizationActivity
 import com.capstone.nutrieasy.ui.main.detail.HistoryDetailActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private var binding: FragmentHomeBinding? = null
+    private lateinit var auth: FirebaseAuth
+    private lateinit var binding: FragmentHomeBinding
     private val historyViewModel: HistoryViewModel by viewModels()
     @Inject lateinit var historyAdapter: HistoryAdapter
 
@@ -36,6 +40,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        auth = FirebaseAuth.getInstance()
+        setupView()
         initRecyclerView()
         getData()
 
@@ -59,6 +65,7 @@ class HomeFragment : Fragment() {
     private fun getData(){
         setLoading(true)
         historyViewModel.getListFruit().observe(viewLifecycleOwner) { responseListStory: PagingData<HistoryResponse> ->
+            Log.d("HomeFragment", "Received data: $responseListStory")
             historyAdapter.submitData(lifecycle, responseListStory)
             historyAdapter.addLoadStateListener { listener ->
                 if (listener.refresh != LoadState.Loading) {
@@ -66,11 +73,12 @@ class HomeFragment : Fragment() {
                 }
                 if (listener.refresh is LoadState.Error) {
                     val data = listener.refresh as LoadState.Error
+                    Log.e("HomeFragment", "Network error: ${data.error}")
                     if (data.error.message.equals("HTTP 401 Unauthorized")) {
                         Toast.makeText(requireActivity(), "Your token expired, please relogin!", Toast.LENGTH_SHORT).show()
                         val intent = Intent(requireActivity(), AuthorizationActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().clear().apply()
+                        PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().clear().apply()
                         requireActivity().getSharedPreferences(requireActivity().packageName, Context.MODE_PRIVATE).edit().clear().apply()
                         startActivity(intent)
                         requireActivity().finish()
@@ -100,13 +108,22 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun setupView(){
+        binding.apply {
+            Picasso.get().load(auth.currentUser?.photoUrl)
+                .placeholder(R.drawable.account_circle_dark_24px)
+                .error(R.drawable.account_circle_dark_24px)
+                .into(binding.itemLogo)
+        }
+    }
+
     private fun setLoading(isLoading: Boolean) {
         binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        binding
     }
 
 }

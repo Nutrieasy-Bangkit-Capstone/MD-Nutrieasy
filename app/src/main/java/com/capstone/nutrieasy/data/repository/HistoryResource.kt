@@ -6,7 +6,8 @@ import androidx.paging.PagingState
 import com.capstone.nutrieasy.data.api.AppService
 import com.capstone.nutrieasy.data.response.HistoryResponse
 
-class HistoryResource(private val apiService: AppService, private val authorization: String): PagingSource<Int, HistoryResponse>() {
+class HistoryResource(private val authRepository: AuthRepository, private val apiService: AppService): PagingSource<Int, HistoryResponse>() {
+
 
     private companion object {
         const val INITIAL_PAGE_INDEX = 1
@@ -22,13 +23,17 @@ class HistoryResource(private val apiService: AppService, private val authorizat
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, HistoryResponse> {
         return try {
             val page = params.key ?: INITIAL_PAGE_INDEX
-            val responseData = apiService.getUserHistory(authorization)
+            val user = authRepository.getFirebaseUser()
+            val uid = user?.uid!!
+            val responseData = apiService.getUserHistory(uid)
 
             val prefKey = if (page == INITIAL_PAGE_INDEX) null else page - 1
             val nextKey = if (responseData.listFruit.isNullOrEmpty()) null else page + 1
 
+            val data = responseData.listFruit ?: emptyList()
+
             LoadResult.Page(
-                data = responseData.listFruit as List,
+                data = data,
                 prevKey = prefKey,
                 nextKey = nextKey
             )

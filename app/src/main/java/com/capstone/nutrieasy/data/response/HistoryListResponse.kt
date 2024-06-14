@@ -2,7 +2,7 @@ package com.capstone.nutrieasy.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class HistoryListResponse(
+data class  HistoryListResponse(
     @field:SerializedName("listFruit")
     val listFruit: List<HistoryResponse>?,
 

@@ -9,8 +9,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import com.google.gson.JsonObject
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -36,8 +34,9 @@ interface AppService {
 
     @GET("user/history")
     suspend fun getUserHistory(@Query("uid") uid: String): HistoryListResponse
+//    suspend fun getUserHistory(@Query("uid") uid: String): HistoryListResponse
 
     @GET("stories/{id}")
-    fun getHistoryDetail(@Header("Authorization") authorization: String, @Path("id") id: String): Call<HistoryDetailResponse>
+    fun getHistoryDetail(@Query("uid") uid: String, @Path("id") id: String): Call<HistoryDetailResponse>
 
 }
