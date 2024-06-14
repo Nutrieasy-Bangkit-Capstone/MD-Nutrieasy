@@ -28,6 +28,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.capstone.nutrieasy.R
 import com.capstone.nutrieasy.databinding.FragmentScanBinding
@@ -39,6 +40,8 @@ import com.capstone.nutrieasy.util.saveImage
 import com.capstone.nutrieasy.util.uriToFile
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.launch
 
 class ScanFragment : Fragment() {
     private lateinit var binding: FragmentScanBinding
@@ -58,16 +61,24 @@ class ScanFragment : Fragment() {
         ActivityResultContracts.PickVisualMedia()
     ){ uri: Uri? ->
         if(uri != null){
-            val bitmap = BitmapFactory.decodeFile(
-                uriToFile(uri, requireContext()).absolutePath
-            )
-            val rotatedBitmap = rotateImageIfRequired(requireContext(), bitmap, uri)
-            Log.d("Preview Size", "Width preview: ${binding.viewFinder.width} Height preview: ${binding.viewFinder.height}")
-            val croppedImage = cropImage(
-                rotatedBitmap, binding.viewFinder, binding.scanBorder
-            )
-            val newUri = saveImage(croppedImage, requireContext())
-            transitionToResult(newUri)
+            //Cara 1
+//            val bitmap = BitmapFactory.decodeFile(
+//                uriToFile(uri, requireContext()).absolutePath
+//            )
+//            val rotatedBitmap = rotateImageIfRequired(requireContext(), bitmap, uri)
+//            Log.d("Preview Size", "Width preview: ${binding.viewFinder.width} Height preview: ${binding.viewFinder.height}")
+//            val croppedImage = cropImage(
+//                rotatedBitmap, binding.viewFinder, binding.scanBorder
+//            )
+//            val newUri = saveImage(croppedImage, requireContext())
+//            transitionToResult(newUri)
+            //Cara 2
+            lifecycleScope.launch {
+                val compressedImageFile = Compressor.compress(requireContext(), uriToFile(uri, requireContext()))
+                transitionToResult(compressedImageFile.toUri())
+            }
+//            val compressedImageFile = uriToFile(uri, requireContext())
+//            transitionToResult(compressedImageFile.toUri())
         }else{
             showToast("No photo have been selected yet")
         }
