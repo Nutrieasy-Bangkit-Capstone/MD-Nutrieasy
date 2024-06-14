@@ -16,7 +16,7 @@
         android:src="@drawable/account_circle_24px"
         app:layout_constraintBottom_toTopOf="@+id/displayNameTv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15"
         app:layout_constraintVertical_chainStyle="packed"

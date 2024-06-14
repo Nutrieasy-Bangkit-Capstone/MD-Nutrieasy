@@ -36,6 +36,7 @@
     <string name="display_name">Display Name</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="todo">To do</string>
     <string name="track">Track</string>
     <string name="tracked">Tracked</string>
 </resources>
