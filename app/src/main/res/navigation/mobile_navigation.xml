@@ -3,19 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/userHomeFragment">
 
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.capstone.nutrieasy.ui.main.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
-    <action
-        android:id="@+id/action_global_navigation_home"
-        app:destination="@id/navigation_home"
-        app:enterAnim="@animator/nav_default_enter_anim"
-        app:popExitAnim="@animator/nav_default_exit_anim" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.capstone.nutrieasy.ui.main.profile.ProfileFragment"
@@ -82,4 +71,17 @@
             android:name="profileData"
             app:argType="com.capstone.nutrieasy.data.api.model.User" />
     </fragment>
+    <fragment
+        android:id="@+id/userHomeFragment"
+        android:name="com.capstone.nutrieasy.ui.main.userhome.UserHomeFragment"
+        android:label="fragment_user_home"
+        tools:layout="@layout/fragment_user_home" />
+    <action
+        android:id="@+id/action_global_userHomeFragment"
+        app:destination="@id/userHomeFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popUpToInclusive="true"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 </navigation>

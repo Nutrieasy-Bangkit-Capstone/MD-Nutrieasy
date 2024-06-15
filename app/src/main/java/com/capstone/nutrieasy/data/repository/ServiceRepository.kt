@@ -1,6 +1,7 @@
 package com.capstone.nutrieasy.data.repository
 
 import com.capstone.nutrieasy.data.api.AppService
+import com.capstone.nutrieasy.data.api.model.HistoryItem
 import com.capstone.nutrieasy.data.api.model.ItemData
 import com.capstone.nutrieasy.data.api.model.TotalIntakeListItem
 import com.capstone.nutrieasy.util.Result
@@ -51,6 +52,20 @@ class ServiceRepository(
             }
         }catch(exc: Exception){
             Result.Error(exc.message ?: "Failed to get daily Nutrition")
+        }
+    }
+
+    suspend fun getHistory(
+        uid: String,
+        date: String? = null
+    ): Result<List<HistoryItem>>{
+        return try{
+            val result = appService.getHistory(uid, date)
+            if(result.success){
+                Result.Success(result.history)
+            }else Result.Error(result.message)
+        }catch(exc: Exception){
+            return Result.Error(exc.message ?: "Failed to fetch history")
         }
     }
 }

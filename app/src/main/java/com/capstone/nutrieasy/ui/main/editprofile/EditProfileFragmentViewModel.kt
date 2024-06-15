@@ -54,10 +54,22 @@ class EditProfileFragmentViewModel @Inject constructor(
                     )
                 }
                 is Result.Success -> {
-                    _viewState.value = _viewState.value?.copy(
-                        isLoading = false,
-                        isSuccess = true
-                    )
+                    val updateFirebaseResult = authRepository.updateUserDisplayName(user, displayName)
+                    when(updateFirebaseResult){
+                        is Result.Error -> {
+                            _viewState.value = _viewState.value?.copy(
+                                isLoading = false,
+                                isError = true,
+                                errorMessage = updateFirebaseResult.message
+                            )
+                        }
+                        is Result.Success -> {
+                            _viewState.value = _viewState.value?.copy(
+                                isLoading = false,
+                                isSuccess = true
+                            )
+                        }
+                    }
                 }
             }
         }

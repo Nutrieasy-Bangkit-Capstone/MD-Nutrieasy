@@ -53,7 +53,7 @@ class ScanFragment : Fragment() {
     ){ isGranted ->
         if(!isGranted){
             showToast("Camera permissions rejected")
-            findNavController().navigate(ScanFragmentDirections.actionGlobalNavigationHome())
+            findNavController().navigate(ScanFragmentDirections.actionGlobalUserHomeFragment())
         }
     }
 

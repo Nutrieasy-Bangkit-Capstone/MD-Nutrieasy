@@ -1,5 +1,6 @@
 package com.capstone.nutrieasy.data.api
 
+import com.capstone.nutrieasy.data.api.model.HistoryResponse
 import com.capstone.nutrieasy.data.api.model.ScanResponse
 import com.capstone.nutrieasy.data.api.model.TrackResponse
 import com.capstone.nutrieasy.data.api.model.UpdateProfileResponse
@@ -47,7 +48,15 @@ interface AppService {
     ): UserIntakeResponse
 
     @GET("user/history")
-    suspend fun getUserHistory(@Query("uid") uid: String): HistoryListResponse
+    suspend fun getUserHistory(
+        @Query("uid") uid: String
+    ): HistoryListResponse
+
+    @GET("user/history")
+    suspend fun getHistory(
+        @Query("uid") uid: String,
+        @Query("date") date: String?
+    ): HistoryResponse
 //    suspend fun getUserHistory(@Query("uid") uid: String): HistoryListResponse
 
     @GET("stories/{id}")

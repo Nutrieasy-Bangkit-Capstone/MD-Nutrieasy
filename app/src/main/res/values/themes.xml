@@ -21,4 +21,12 @@
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">4dp</item>
     </style>
+
+    <style name="customButton" parent="Widget.Material3.Button">
+        <item name="colorPrimary">@color/sea_salt_white</item>
+    </style>
+
+    <style name="CustomLinearProgressIndicator" parent="Widget.Material3.LinearProgressIndicator.Legacy">
+        <item name="cornerSize">4dp</item>
+    </style>
 </resources>

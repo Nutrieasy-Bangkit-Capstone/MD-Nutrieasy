@@ -43,7 +43,7 @@ class ResultFragmentViewModel @Inject constructor(
         )
     )
     val viewState: LiveData<ResultFragmentViewState> = _viewState
-    val nutritions_name = listOf("Calorie", "Sugar", "Fiber", "Protein")
+    val nutritions_name = listOf("calorie", "fat", "fiber", "protein")
 
     fun scan(uid: String, imageUri: Uri, context: Context){
         viewModelScope.launch {

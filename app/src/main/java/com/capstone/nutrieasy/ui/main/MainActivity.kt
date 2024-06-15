@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 .getFragment<Fragment>().findNavController()
             when(item.itemId){
                 R.id.navigation_home -> {
-                    navController.navigate(R.id.action_global_navigation_home)
+                    navController.navigate(R.id.action_global_userHomeFragment)
                     true
                 }
                 R.id.navigation_scan -> {

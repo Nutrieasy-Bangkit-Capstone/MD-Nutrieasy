@@ -160,21 +160,21 @@ class ResultFragment : Fragment() {
     private fun setupDailyNutritionView(nutrition: TotalIntakeListItem){
         binding.apply {
             when{
-                nutrition.name.contains("Calorie", true) -> {
+                nutrition.name.contains("calorie", true) -> {
                     dailyCalorieTv.text = getString(R.string.kcal, nutrition.value.toInt())
                     dailyCaloriePi.progress = nutrition.value.toInt()
                 }
-                nutrition.name.contains("Protein", true) -> {
+                nutrition.name.contains("protein", true) -> {
                     dailyProteinTv.text = getString(R.string.gram, nutrition.value.toInt())
                     dailyProteinPi.progress = nutrition.value.toInt()
                 }
-                nutrition.name.contains("Fiber", true) -> {
+                nutrition.name.contains("fiber", true) -> {
                     dailyFiberTv.text = getString(R.string.gram, nutrition.value.toInt())
                     dailyFiberPi.progress = nutrition.value.toInt()
                 }
-                nutrition.name.contains("Sugar", true) -> {
-                    dailySugarTv.text = getString(R.string.gram, nutrition.value.toInt())
-                    dailySugarPi.progress = nutrition.value.toInt()
+                nutrition.name.contains("fat", true) -> {
+                    dailyFatTv.text = getString(R.string.gram, nutrition.value.toInt())
+                    dailyFatPi.progress = nutrition.value.toInt()
                 }
             }
         }
