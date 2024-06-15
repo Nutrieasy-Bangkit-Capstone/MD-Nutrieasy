@@ -6,6 +6,5 @@ data class EditProfileViewState(
     var isLoading: Boolean,
     var isSuccess: Boolean,
     var isError: Boolean,
-    var errorMessage: String,
-    var data: User
+    var errorMessage: String
 )

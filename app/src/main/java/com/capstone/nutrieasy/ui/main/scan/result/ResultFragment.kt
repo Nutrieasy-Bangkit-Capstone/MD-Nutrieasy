@@ -13,10 +13,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.nutrieasy.R
+import com.capstone.nutrieasy.data.api.model.TotalIntakeListItem
 import com.capstone.nutrieasy.databinding.FragmentResultBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButton.IconGravity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -86,6 +88,10 @@ class ResultFragment : Fragment() {
                     showTrackLoading()
                 }else hideTrackLoading()
 
+                if(isDailyNutritionLoading){
+                    showDailyNutritionLoading()
+                }else hideDailyNutritionLoading()
+
                 when{
                     isError -> {
                         val dialog = MaterialAlertDialogBuilder(requireContext())
@@ -132,6 +138,44 @@ class ResultFragment : Fragment() {
                         trackBtn.isEnabled = false
                     }
                 }
+
+                when{
+                    isDailyNutritionError -> {
+                        Snackbar.make(binding.root, "Failed to get daily nutrition", Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.retry)) {
+                                viewModel.getDailyNutrition()
+                            }
+                            .show()
+                    }
+                    isDailyNutritionSuccess -> {
+                        for(nutrition in dailyNutritionData!!){
+                            setupDailyNutritionView(nutrition)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupDailyNutritionView(nutrition: TotalIntakeListItem){
+        binding.apply {
+            when{
+                nutrition.name.contains("Calorie", true) -> {
+                    dailyCalorieTv.text = getString(R.string.kcal, nutrition.value.toInt())
+                    dailyCaloriePi.progress = nutrition.value.toInt()
+                }
+                nutrition.name.contains("Protein", true) -> {
+                    dailyProteinTv.text = getString(R.string.gram, nutrition.value.toInt())
+                    dailyProteinPi.progress = nutrition.value.toInt()
+                }
+                nutrition.name.contains("Fiber", true) -> {
+                    dailyFiberTv.text = getString(R.string.gram, nutrition.value.toInt())
+                    dailyFiberPi.progress = nutrition.value.toInt()
+                }
+                nutrition.name.contains("Sugar", true) -> {
+                    dailySugarTv.text = getString(R.string.gram, nutrition.value.toInt())
+                    dailySugarPi.progress = nutrition.value.toInt()
+                }
             }
         }
     }
@@ -156,5 +200,15 @@ class ResultFragment : Fragment() {
     private fun hideTrackLoading(){
         binding.trackProgressBar.visibility = View.INVISIBLE
         binding.trackBtn.text = getString(R.string.track)
+    }
+
+    private fun showDailyNutritionLoading(){
+        binding.dailyNutritionProgressBar.visibility = View.VISIBLE
+        binding.dailyNutritionLayout.visibility = View.INVISIBLE
+    }
+
+    private fun hideDailyNutritionLoading(){
+        binding.dailyNutritionProgressBar.visibility = View.INVISIBLE
+        binding.dailyNutritionLayout.visibility = View.VISIBLE
     }
 }

@@ -173,6 +173,18 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             tools:listitem="@layout/nutrient_item" />
 
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/dailyNutritionProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:elevation="100dp"
+            app:indicatorColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/materialCardView"
+            app:layout_constraintTop_toTopOf="@+id/materialCardView" />
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             style="?attr/materialCardViewElevatedStyle"
@@ -184,6 +196,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dailyNutritionLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="16dp">

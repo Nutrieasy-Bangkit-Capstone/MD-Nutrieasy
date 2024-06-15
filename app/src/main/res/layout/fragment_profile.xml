@@ -256,7 +256,7 @@
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:visibility="invisible"
-        app:indicatorColor="@color/white"
+        app:indicatorColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/profileDataLayout"
         app:layout_constraintEnd_toEndOf="@+id/profileDataLayout"
         app:layout_constraintStart_toStartOf="@+id/profileDataLayout"

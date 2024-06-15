@@ -70,7 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/birth_of_date"
-        app:endIconMode="clear_text"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/calendar_month_24px"
         app:layout_constraintBottom_toTopOf="@+id/weightTextField"
         app:layout_constraintTop_toBottomOf="@+id/displayNameTextField"
         app:startIconDrawable="@drawable/calendar_month_24px"
@@ -106,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="@string/name"
+        android:hint="@string/height"
         app:endIconMode="clear_text"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintTop_toBottomOf="@+id/weightTextField"
@@ -176,5 +177,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
         app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:elevation="1dp"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:indicatorColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/saveBtn"
+        app:layout_constraintEnd_toEndOf="@+id/saveBtn"
+        app:layout_constraintStart_toStartOf="@+id/saveBtn"
+        app:layout_constraintTop_toTopOf="@+id/saveBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

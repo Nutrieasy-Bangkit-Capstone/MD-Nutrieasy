@@ -39,4 +39,7 @@
     <string name="todo">To do</string>
     <string name="track">Track</string>
     <string name="tracked">Tracked</string>
+    <string name="retry">Retry</string>
+    <string name="kcal">%1$d Kcal</string>
+    <string name="gram">%1$d gram</string>
 </resources>

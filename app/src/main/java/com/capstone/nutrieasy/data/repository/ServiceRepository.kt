@@ -2,6 +2,7 @@ package com.capstone.nutrieasy.data.repository
 
 import com.capstone.nutrieasy.data.api.AppService
 import com.capstone.nutrieasy.data.api.model.ItemData
+import com.capstone.nutrieasy.data.api.model.TotalIntakeListItem
 import com.capstone.nutrieasy.util.Result
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
@@ -34,6 +35,22 @@ class ServiceRepository(
             Result.Success(result.message)
         }catch (exc: Exception){
             Result.Error(exc.message ?: "Failed to track, please try again")
+        }
+    }
+
+    suspend fun getDailyNutrition(
+        uid: String,
+        date: String? = null
+    ): Result<List<TotalIntakeListItem>>{
+        return try {
+            val result = appService.getDailyNutrition(uid, date)
+            if(result.success){
+                Result.Success(result.totalIntakeList)
+            }else{
+                Result.Error(result.message)
+            }
+        }catch(exc: Exception){
+            Result.Error(exc.message ?: "Failed to get daily Nutrition")
         }
     }
 }
