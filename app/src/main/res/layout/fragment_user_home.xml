@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.main.userhome.UserHomeFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -282,7 +283,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="700dp"
             android:layout_marginTop="8dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -317,7 +318,7 @@
             android:layout_width="286dp"
             android:layout_height="64dp"
             android:layout_marginTop="128dp"
-            android:text="Oops!, Your meals history is empty, Scan now"
+            android:text="@string/oops_your_meals_history_is_empty_scan_now"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"

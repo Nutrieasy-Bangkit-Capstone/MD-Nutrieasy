@@ -75,7 +75,15 @@
         android:id="@+id/userHomeFragment"
         android:name="com.capstone.nutrieasy.ui.main.userhome.UserHomeFragment"
         android:label="fragment_user_home"
-        tools:layout="@layout/fragment_user_home" />
+        tools:layout="@layout/fragment_user_home" >
+        <action
+            android:id="@+id/action_userHomeFragment_to_historyFragment"
+            app:destination="@id/historyFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
     <action
         android:id="@+id/action_global_userHomeFragment"
         app:destination="@id/userHomeFragment"
@@ -84,4 +92,9 @@
         app:popUpToInclusive="true"
         app:popEnterAnim="@anim/nav_default_pop_enter_anim"
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.capstone.nutrieasy.ui.main.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>

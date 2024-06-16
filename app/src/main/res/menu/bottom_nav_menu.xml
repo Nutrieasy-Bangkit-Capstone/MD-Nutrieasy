@@ -9,7 +9,8 @@
 
     <item
         android:id="@+id/navigation_scan"
-        android:icon="@drawable/baseline_add_24"
+        android:icon="@drawable/camera_24px"
+        android:iconTint="@color/black"
         android:enabled="true"
         android:title="@string/scan" />
 

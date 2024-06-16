@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.nutrieasy.R
 import com.capstone.nutrieasy.databinding.FragmentUserHomeBinding
@@ -34,6 +35,7 @@ class UserHomeFragment : Fragment() {
         viewModel.getDailyNutrition()
         viewModel.getHistory()
         setupView()
+        setupAction()
         setupState()
     }
 
@@ -44,13 +46,20 @@ class UserHomeFragment : Fragment() {
                 .error(R.drawable.account_circle_dark_24px)
                 .into(binding.userIv)
 
-            displayNameTv.text = viewModel.user.displayName
+            displayNameTv.text = getString(R.string.hello, viewModel.user.displayName)
 
             adapter = HistoryAdapter(requireContext())
             adapter?.submitList(listOf())
             val layout = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
             recyclerView.layoutManager = layout
+        }
+    }
+
+    private fun setupAction(){
+        binding.historyBtn.setOnClickListener {
+            val directions = UserHomeFragmentDirections.actionUserHomeFragmentToHistoryFragment()
+            findNavController().navigate(directions)
         }
     }
 

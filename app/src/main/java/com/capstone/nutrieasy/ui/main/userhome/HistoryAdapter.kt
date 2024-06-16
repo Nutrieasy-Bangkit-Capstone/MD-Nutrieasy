@@ -44,8 +44,7 @@ DIFF_CALLBACK
                 foodCalorieTv.text = context.getString(R.string.calorie_item, calorie?.value?.toInt())
                 foodSizeTv.text = context.getString(R.string.size_item, size)
 
-//                proteinPi.progress = protein?.value?.toInt() ?: 0
-                proteinPi.progress = 40
+                proteinPi.progress = protein?.value?.toInt() ?: 0
                 proteinPi.max = 50 * item.servingQty
                 proteinSizeTv.text = context.getString(R.string.size_item, protein?.value?.toInt())
 
