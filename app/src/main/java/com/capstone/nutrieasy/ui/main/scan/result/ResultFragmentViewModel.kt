@@ -43,7 +43,7 @@ class ResultFragmentViewModel @Inject constructor(
         )
     )
     val viewState: LiveData<ResultFragmentViewState> = _viewState
-    val nutritions_name = listOf("calorie", "fat", "fiber", "protein")
+    private val nutritionName = listOf("energy", "sugar", "fiber", "protein")
 
     fun scan(uid: String, imageUri: Uri, context: Context){
         viewModelScope.launch {
@@ -88,7 +88,7 @@ class ResultFragmentViewModel @Inject constructor(
                         is Result.Success -> {
                             val nutrition = dailyNutritionResult.data.filter { item ->
                                 var isExist = false
-                                for(name in nutritions_name){
+                                for(name in nutritionName){
                                     if(!isExist){
                                         isExist = item.name.contains(name, true)
                                     }else break
@@ -163,7 +163,7 @@ class ResultFragmentViewModel @Inject constructor(
                         is Result.Success -> {
                             val nutrition = dailyNutritionResult.data.filter { item ->
                                 var isExist = false
-                                for(name in nutritions_name){
+                                for(name in nutritionName){
                                     if(!isExist){
                                         isExist = item.name.contains(name, true)
                                     }else break
@@ -209,7 +209,7 @@ class ResultFragmentViewModel @Inject constructor(
                 is Result.Success -> {
                     val nutrition = result.data.filter { item ->
                         var isExist = false
-                        for(name in nutritions_name){
+                        for(name in nutritionName){
                             if(!isExist){
                                 isExist = item.name.contains(name, true)
                             }else break

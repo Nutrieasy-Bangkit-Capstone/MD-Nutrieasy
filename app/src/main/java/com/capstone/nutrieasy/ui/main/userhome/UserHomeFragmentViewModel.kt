@@ -33,7 +33,7 @@ class UserHomeFragmentViewModel @Inject constructor(
         )
     )
     val viewState: LiveData<UserHomeFragmentViewState> = _viewState
-    val nutritions_name = listOf("calorie", "fat", "fiber", "protein")
+    private val nutritionName = listOf("energy", "sugar", "fiber", "protein")
 
     fun getDailyNutrition(){
         viewModelScope.launch {
@@ -54,7 +54,7 @@ class UserHomeFragmentViewModel @Inject constructor(
                 is Result.Success -> {
                     val nutrition = result.data.filter { item ->
                         var isExist = false
-                        for(name in nutritions_name){
+                        for(name in nutritionName){
                             if(!isExist){
                                 isExist = item.name.contains(name, true)
                             }else break

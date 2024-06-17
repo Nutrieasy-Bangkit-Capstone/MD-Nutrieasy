@@ -95,9 +95,13 @@ class ProfileFragment : Fragment() {
                             val genderText: String = if(data?.gender != null){
                                 data?.gender!!
                             }else "-"
+
                             bodTv.text = dateText
                             weightTv.text = weightText
                             heightTv.text = heightText
+                            if(data?.activityLevel != null){
+                                activityTv.text = data?.activityLevel
+                            }
                             if(data?.gender == null){
                                 genderIv.setImageResource(R.drawable.person_24px)
                             }else if(data?.gender?.equals("male", true) == true){

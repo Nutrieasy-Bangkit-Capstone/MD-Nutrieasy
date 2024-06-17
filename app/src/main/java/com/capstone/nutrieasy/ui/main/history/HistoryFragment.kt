@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.nutrieasy.R
+import com.capstone.nutrieasy.data.api.model.HistoryItem
+import com.capstone.nutrieasy.databinding.FoodItemBinding
 import com.capstone.nutrieasy.databinding.FragmentHistoryBinding
 import com.capstone.nutrieasy.ui.main.userhome.HistoryAdapter
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -46,7 +50,21 @@ class HistoryFragment : Fragment() {
                 getString(R.string.all_history)
             }else viewModel.date
 
-            adapter = HistoryAdapter(requireContext())
+            adapter = HistoryAdapter(
+                requireContext(),
+                object: HistoryAdapter.Action{
+                    override fun onClick(item: HistoryItem, binding: FoodItemBinding) {
+                        val directions = HistoryFragmentDirections.actionHistoryFragmentToItemDetailFragment(item)
+                        val extras = FragmentNavigatorExtras(
+                            binding.foodIv to "itemImage",
+                            binding.foodName to "itemName"
+                        )
+                        if (findNavController().currentDestination?.id == R.id.historyFragment) {
+                            findNavController().navigate(directions, extras)
+                        }
+                    }
+                }
+            )
             adapter?.submitList(listOf())
             val layout = LinearLayoutManager(requireContext())
             binding.recyclerView.adapter = adapter

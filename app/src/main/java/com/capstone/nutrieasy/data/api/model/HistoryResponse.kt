@@ -1,6 +1,8 @@
 package com.capstone.nutrieasy.data.api.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class HistoryResponse(
 
@@ -14,6 +16,7 @@ data class HistoryResponse(
 	val message: String
 )
 
+@Parcelize
 data class HistoryItem(
 
 	@field:SerializedName("servingUnit")
@@ -45,4 +48,4 @@ data class HistoryItem(
 
 	@field:SerializedName("servingWeightGrams")
 	val servingWeightGrams: Int
-)
+): Parcelable

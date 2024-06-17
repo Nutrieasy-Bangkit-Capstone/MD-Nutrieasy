@@ -2,10 +2,12 @@ package com.capstone.nutrieasy.ui.main.editprofile
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,6 +19,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -44,26 +47,35 @@ class EditProfileFragment : Fragment() {
 
         val data = args.profileData
 
-        setupState()
         setupAction()
         setupView(data)
+        setupState()
     }
 
     private fun setupView(data: User){
         binding.apply {
-//            val dateFormat = SimpleDateFormat("dd MM yyyy", Locale.US)
-            val dateText: String = data.dateOfBirth ?: "-"
+            val dateText: String = data.dateOfBirth ?: ""
             val weightText: String = if(data.weight != null){
                 data.weight.toString()
             }else ""
             val heightText: String = if(data.height != null){
                 data.height.toString()
             }else ""
+            val activityList = listOf("Sedentary", "Lightly Active", "Moderately Active", "Very Active", "Extra Active")
+            val activityDropdown = (activityEt as MaterialAutoCompleteTextView)
+            val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, activityList)
+            activityDropdown.setAdapter(adapter)
+            activityDropdown.keyListener = null
 
             displayNameEt.setText(data.fullName)
             bodEt.setText(dateText)
             weightEt.setText(weightText)
             heightEt.setText(heightText)
+            if(!data.activityLevel.isNullOrEmpty()){
+                val index = activityList.indexOf(data.activityLevel)
+                Log.d("index dropdown", index.toString())
+                activityDropdown.setText(adapter.getItem(index), false)
+            }
             if(data.gender != null){
                 if(data.gender != "Female"){
                     femaleRb.isChecked = false
@@ -133,6 +145,11 @@ class EditProfileFragment : Fragment() {
                     }
                 }
             )
+
+            val activityDropdown = (activityEt as MaterialAutoCompleteTextView)
+            activityDropdown.setOnItemClickListener { _, _, _, _ ->
+                viewModel.activity = activityDropdown.text.toString()
+            }
 
             maleRb.setOnCheckedChangeListener { _, isChecked ->
                 if(isChecked){

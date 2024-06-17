@@ -54,4 +54,7 @@
     <string name="all_history">All History</string>
     <string name="oops_your_meals_history_is_empty_scan_now">Oops!, Your meals history is empty, Scan now</string>
     <string name="empty_history">History is empty</string>
+    <string name="qty">%1$d Qty</string>
+    <string name="activity">Activity</string>
+    <string name="sugar">Sugar</string>
 </resources>

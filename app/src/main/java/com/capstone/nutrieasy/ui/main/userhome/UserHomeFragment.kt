@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.nutrieasy.R
+import com.capstone.nutrieasy.data.api.model.HistoryItem
 import com.capstone.nutrieasy.databinding.FragmentUserHomeBinding
 import com.capstone.nutrieasy.data.api.model.TotalIntakeListItem
+import com.capstone.nutrieasy.databinding.FoodItemBinding
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +41,10 @@ class UserHomeFragment : Fragment() {
         setupView()
         setupAction()
         setupState()
+        postponeEnterTransition()
+        binding.recyclerView.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
     }
 
     private fun setupView(){
@@ -48,7 +56,21 @@ class UserHomeFragment : Fragment() {
 
             displayNameTv.text = getString(R.string.hello, viewModel.user.displayName)
 
-            adapter = HistoryAdapter(requireContext())
+            adapter = HistoryAdapter(
+                requireContext(),
+                object: HistoryAdapter.Action{
+                    override fun onClick(item: HistoryItem, binding: FoodItemBinding) {
+                        val directions = UserHomeFragmentDirections.actionUserHomeFragmentToItemDetailFragment(item)
+                        val extras = FragmentNavigatorExtras(
+                            binding.foodIv to "itemImage",
+                            binding.foodName to "itemName"
+                        )
+                        if (findNavController().currentDestination?.id == R.id.userHomeFragment) {
+                            findNavController().navigate(directions, extras)
+                        }
+                    }
+                }
+            )
             adapter?.submitList(listOf())
             val layout = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
@@ -115,25 +137,25 @@ class UserHomeFragment : Fragment() {
     private fun setupDailyNutritionView(nutrition: TotalIntakeListItem){
         binding.apply {
             when{
-                nutrition.name.contains("calorie", true) -> {
+                nutrition.name.contains("energy", true) -> {
                     dailyCalorieTv.text = getString(R.string.kcal, nutrition.value.toInt())
                     dailyCaloriePi.progress = nutrition.value.toInt()
-                    dailyCaloriePi.max = 2300
+                    dailyCaloriePi.max = nutrition.maxValue.toInt()
                 }
                 nutrition.name.contains("protein", true) -> {
                     dailyProteinTv.text = getString(R.string.gram, nutrition.value.toInt())
                     dailyProteinPi.progress = nutrition.value.toInt()
-                    dailyProteinPi.max = 170
+                    dailyProteinPi.max = nutrition.maxValue.toInt()
                 }
                 nutrition.name.contains("fiber", true) -> {
                     dailyFiberTv.text = getString(R.string.gram, nutrition.value.toInt())
                     dailyFiberPi.progress = nutrition.value.toInt()
-                    dailyFiberPi.max = 50
+                    dailyFiberPi.max = nutrition.maxValue.toInt()
                 }
-                nutrition.name.contains("fat", true) -> {
-                    dailyFatTv.text = getString(R.string.gram, nutrition.value.toInt())
-                    dailyFatPi.progress = nutrition.value.toInt()
-                    dailyFatPi.max = 150
+                nutrition.name.contains("sugar", true) -> {
+                    dailySugarTv.text = getString(R.string.gram, nutrition.value.toInt())
+                    dailySugarPi.progress = nutrition.value.toInt()
+                    dailySugarPi.max = nutrition.maxValue.toInt()
                 }
             }
         }

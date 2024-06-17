@@ -44,5 +44,8 @@ data class User(
 	val email: String,
 
 	@field:SerializedName("height")
-	val height: Int?
+	val height: Int?,
+
+	@field:SerializedName("activityLevel")
+	val activityLevel: String?
 ): Parcelable

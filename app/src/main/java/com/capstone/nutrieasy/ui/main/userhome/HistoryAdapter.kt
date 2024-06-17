@@ -13,7 +13,8 @@ import com.capstone.nutrieasy.databinding.FoodItemBinding
 import com.squareup.picasso.Picasso
 
 class HistoryAdapter(
-    private val context: Context
+    private val context: Context,
+    private val action: Action
 ): ListAdapter<HistoryItem, HistoryAdapter.HistoryAdapterViewHolder>(
 DIFF_CALLBACK
 ) {
@@ -44,6 +45,9 @@ DIFF_CALLBACK
                 foodCalorieTv.text = context.getString(R.string.calorie_item, calorie?.value?.toInt())
                 foodSizeTv.text = context.getString(R.string.size_item, size)
 
+                foodIv.transitionName = "${item.id}_image"
+                foodName.transitionName = "${item.id}_name"
+
                 proteinPi.progress = protein?.value?.toInt() ?: 0
                 proteinPi.max = 50 * item.servingQty
                 proteinSizeTv.text = context.getString(R.string.size_item, protein?.value?.toInt())
@@ -55,6 +59,10 @@ DIFF_CALLBACK
                 fatPi.progress = fat?.value?.toInt() ?: 0
                 fatPi.max = 50 * item.servingQty
                 fatSizeTv.text = context.getString(R.string.size_item, fat?.value?.toInt())
+
+                binding.root.setOnClickListener{
+                    action.onClick(item, binding)
+                }
             }
         }
     }
@@ -70,6 +78,7 @@ DIFF_CALLBACK
         )
     }
 
+
     companion object{
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HistoryItem>(){
             override fun areItemsTheSame(oldItem: HistoryItem, newItem: HistoryItem): Boolean {
@@ -81,5 +90,9 @@ DIFF_CALLBACK
                         && oldItem.createdAt == newItem.createdAt && oldItem.userId == newItem.userId
             }
         }
+    }
+
+    interface Action{
+        fun onClick(item: HistoryItem, binding: FoodItemBinding)
     }
 }

@@ -109,7 +109,7 @@ class ResultFragment : Fragment() {
                         val calorie = data?.nutrientsDetailList?.first {
                             it.name.contains("Energy") && it.unit == "kcal"
                         }
-                        binding.calorieTv.text = "${calorie?.value?.times(size)}Kcal / ${data?.servingWeightGrams?.times(size)}"
+                        binding.calorieTv.text = "${calorie?.value?.times(size)}Kcal / ${data?.servingWeightGrams?.times(size)} gram"
                         val nutrientList = data?.nutrientsDetailList?.map {
                             it.copy(value = it.value * size)
                         }
@@ -160,21 +160,25 @@ class ResultFragment : Fragment() {
     private fun setupDailyNutritionView(nutrition: TotalIntakeListItem){
         binding.apply {
             when{
-                nutrition.name.contains("calorie", true) -> {
+                nutrition.name.contains("energy", true) -> {
                     dailyCalorieTv.text = getString(R.string.kcal, nutrition.value.toInt())
                     dailyCaloriePi.progress = nutrition.value.toInt()
+                    dailyCaloriePi.max = nutrition.maxValue.toInt()
                 }
                 nutrition.name.contains("protein", true) -> {
                     dailyProteinTv.text = getString(R.string.gram, nutrition.value.toInt())
                     dailyProteinPi.progress = nutrition.value.toInt()
+                    dailyProteinPi.max = nutrition.maxValue.toInt()
                 }
                 nutrition.name.contains("fiber", true) -> {
                     dailyFiberTv.text = getString(R.string.gram, nutrition.value.toInt())
                     dailyFiberPi.progress = nutrition.value.toInt()
+                    dailyFiberPi.max = nutrition.maxValue.toInt()
                 }
-                nutrition.name.contains("fat", true) -> {
-                    dailyFatTv.text = getString(R.string.gram, nutrition.value.toInt())
-                    dailyFatPi.progress = nutrition.value.toInt()
+                nutrition.name.contains("sugar", true) -> {
+                    dailySugarTv.text = getString(R.string.gram, nutrition.value.toInt())
+                    dailySugarPi.progress = nutrition.value.toInt()
+                    dailySugarPi.max = nutrition.value.toInt()
                 }
             }
         }

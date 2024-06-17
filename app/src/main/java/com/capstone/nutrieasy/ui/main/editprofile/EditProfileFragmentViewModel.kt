@@ -21,6 +21,7 @@ class EditProfileFragmentViewModel @Inject constructor(
     var gender = ""
     var height = 0
     var weight = 0
+    var activity = ""
 
     private val _viewState = MutableLiveData(
         EditProfileViewState(
@@ -42,7 +43,8 @@ class EditProfileFragmentViewModel @Inject constructor(
             val user = authRepository.getFirebaseUser()
             val result = profileRepository.updateProfile(
                 user!!.uid, displayName,
-                bod, weight, height, gender
+                bod, weight, height,
+                activity, gender
             )
 
             when(result){

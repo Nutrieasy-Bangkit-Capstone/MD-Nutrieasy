@@ -1,6 +1,8 @@
 package com.capstone.nutrieasy.data.api.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class ScanResponse(
 
@@ -14,6 +16,7 @@ data class ScanResponse(
 	val message: String
 )
 
+@Parcelize
 data class NutrientsDetailListItem(
 
 	@field:SerializedName("unit")
@@ -27,7 +30,7 @@ data class NutrientsDetailListItem(
 
 	@field:SerializedName("value")
 	val value: Float
-)
+): Parcelable
 
 data class ItemData(
 

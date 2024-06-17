@@ -26,5 +26,11 @@ data class TotalIntakeListItem(
 	val name: String,
 
 	@field:SerializedName("value")
-	val value: Double
+	val value: Double,
+
+	@field:SerializedName("minValue")
+	val minValue: Double,
+
+	@field:SerializedName("maxValue")
+	val maxValue: Double
 )

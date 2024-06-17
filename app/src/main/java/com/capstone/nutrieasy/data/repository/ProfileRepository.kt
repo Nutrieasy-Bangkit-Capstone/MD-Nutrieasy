@@ -20,7 +20,7 @@ class ProfileRepository(
     suspend fun updateProfile(
         uid: String,
         displayName: String, bod: String? = null,
-        weight: Int, height: Int,
+        weight: Int, height: Int, activityLevel: String? = null,
         gender: String? = null
     ): Result<String> {
         val body = JsonObject().apply {
@@ -30,6 +30,7 @@ class ProfileRepository(
             addProperty("dateOfBirth", bod)
             addProperty("height", height)
             addProperty("weight", weight)
+            addProperty("activityLevel", activityLevel)
         }
         return try{
             val result = appService.updateProfile(body)
