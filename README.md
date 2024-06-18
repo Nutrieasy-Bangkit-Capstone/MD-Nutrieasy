@@ -64,4 +64,4 @@ https://github.com/Nutrieasy-Bangkit-Capstone/MD-Nutrieasy.git
 2. Open the project directory in Android Studio.
 3. Build the application. This may take a few minutes.
 4. Run the application on an emulator or physical device.
-5. Wait for the application to be installed and launched. You should now be able to test the Agronify application.
+5. Wait for the application to be installed and launched. You should now be able to test the Nutrieasy application.
