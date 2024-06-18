@@ -15,7 +15,11 @@ class ServiceRepository(
     suspend fun scan(uid: RequestBody, image: MultipartBody.Part): Result<ItemData>{
         return try{
             val result = appService.scan(uid, image)
-            Result.Success(result.data)
+            if(result.success){
+                Result.Success(result.data)
+            }else{
+                Result.Error(result.message)
+            }
         }catch(exc: Exception){
             Result.Error(exc.message ?: "Failed to scan the image")
         }

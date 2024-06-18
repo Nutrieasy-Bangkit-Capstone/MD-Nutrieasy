@@ -70,7 +70,10 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun setupView(){
-
+        if(viewModel.user != null){
+            val direction = WelcomeFragmentDirections.actionWelcomeFragmentToBlankFragment()
+            findNavController().navigate(direction)
+        }
     }
 
     private fun setupAction(){

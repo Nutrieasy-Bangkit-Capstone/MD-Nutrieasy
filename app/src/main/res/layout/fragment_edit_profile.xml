@@ -144,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="@string/height"
+            android:hint="@string/activity"
             app:layout_constraintBottom_toTopOf="@+id/radioGroup"
             app:layout_constraintTop_toBottomOf="@+id/heightTextField"
             app:startIconDrawable="@drawable/sprint_24px"

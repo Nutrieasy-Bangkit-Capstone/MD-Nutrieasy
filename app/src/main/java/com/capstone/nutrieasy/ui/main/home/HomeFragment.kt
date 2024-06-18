@@ -38,15 +38,15 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
         setupView()
         initRecyclerView()
         getData()
 
-        binding?.swipeRefresh?.setOnRefreshListener {
-            binding?.swipeRefresh?.isRefreshing = false
+        binding.swipeRefresh.setOnRefreshListener {
+            binding.swipeRefresh.isRefreshing = false
             setLoading(true)
             getData()
         }
@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        return binding?.root
+        return binding.root
     }
 
     private fun getData(){
@@ -98,9 +98,9 @@ class HomeFragment : Fragment() {
 
     private fun initRecyclerView() {
         with(binding) {
-            this?.rvListFruit?.layoutManager = LinearLayoutManager(requireActivity())
-            this?.rvListFruit?.setHasFixedSize(true)
-            this?.rvListFruit?.adapter = historyAdapter.withLoadStateFooter(
+            this.rvListFruit.layoutManager = LinearLayoutManager(requireActivity())
+            this.rvListFruit.setHasFixedSize(true)
+            this.rvListFruit.adapter = historyAdapter.withLoadStateFooter(
                 footer = LoadingStateAdapter {
                     historyAdapter.retry()
                 }
@@ -118,7 +118,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setLoading(isLoading: Boolean) {
-        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

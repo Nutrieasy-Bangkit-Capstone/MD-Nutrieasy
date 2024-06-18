@@ -16,6 +16,7 @@ class WelcomeFragmentViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val sessionRepository: SessionRepository
 ): ViewModel(){
+    val user = authRepository.getFirebaseUser()
     private val _viewState = MutableLiveData(
         WelcomeFragmentViewState(
             isLoading = false,

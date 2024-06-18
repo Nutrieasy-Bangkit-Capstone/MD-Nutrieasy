@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -73,6 +74,7 @@ class EditProfileFragment : Fragment() {
             heightEt.setText(heightText)
             if(!data.activityLevel.isNullOrEmpty()){
                 val index = activityList.indexOf(data.activityLevel)
+                viewModel.activity = data.activityLevel
                 Log.d("index dropdown", index.toString())
                 activityDropdown.setText(adapter.getItem(index), false)
             }
@@ -149,6 +151,16 @@ class EditProfileFragment : Fragment() {
             val activityDropdown = (activityEt as MaterialAutoCompleteTextView)
             activityDropdown.setOnItemClickListener { _, _, _, _ ->
                 viewModel.activity = activityDropdown.text.toString()
+            }
+
+            activityDropdown.addTextChangedListener {
+                object: TextChangedListener(){
+                    override fun onTextChanged(
+                        text: CharSequence?, start: Int, before: Int, count: Int
+                    ) {
+                        viewModel.activity = text.toString()
+                    }
+                }
             }
 
             maleRb.setOnCheckedChangeListener { _, isChecked ->

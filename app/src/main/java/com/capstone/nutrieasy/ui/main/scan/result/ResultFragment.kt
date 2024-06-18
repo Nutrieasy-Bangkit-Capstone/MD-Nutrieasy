@@ -162,23 +162,23 @@ class ResultFragment : Fragment() {
             when{
                 nutrition.name.contains("energy", true) -> {
                     dailyCalorieTv.text = getString(R.string.kcal, nutrition.value.toInt())
-                    dailyCaloriePi.progress = nutrition.value.toInt()
                     dailyCaloriePi.max = nutrition.maxValue.toInt()
+                    dailyCaloriePi.progress = nutrition.value.toInt()
                 }
                 nutrition.name.contains("protein", true) -> {
                     dailyProteinTv.text = getString(R.string.gram, nutrition.value.toInt())
-                    dailyProteinPi.progress = nutrition.value.toInt()
                     dailyProteinPi.max = nutrition.maxValue.toInt()
+                    dailyProteinPi.progress = nutrition.value.toInt()
                 }
                 nutrition.name.contains("fiber", true) -> {
                     dailyFiberTv.text = getString(R.string.gram, nutrition.value.toInt())
-                    dailyFiberPi.progress = nutrition.value.toInt()
                     dailyFiberPi.max = nutrition.maxValue.toInt()
+                    dailyFiberPi.progress = nutrition.value.toInt()
                 }
                 nutrition.name.contains("sugar", true) -> {
                     dailySugarTv.text = getString(R.string.gram, nutrition.value.toInt())
+                    dailySugarPi.max = nutrition.maxValue.toInt()
                     dailySugarPi.progress = nutrition.value.toInt()
-                    dailySugarPi.max = nutrition.value.toInt()
                 }
             }
         }

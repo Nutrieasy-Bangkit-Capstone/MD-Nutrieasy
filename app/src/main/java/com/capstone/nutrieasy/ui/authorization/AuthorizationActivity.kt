@@ -3,10 +3,14 @@ package com.capstone.nutrieasy.ui.authorization
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.capstone.nutrieasy.databinding.ActivityAuthorizationBinding
 import com.capstone.nutrieasy.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AuthorizationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthorizationBinding
-    private lateinit var auth: FirebaseAuth
+    private val viewModel by viewModels<AuthorizationActivityViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -25,16 +29,24 @@ class AuthorizationActivity : AppCompatActivity() {
         binding = ActivityAuthorizationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = Firebase.auth
+        if(viewModel.user != null){
+            viewModel.refreshAccessToken()
+        }
+        setupState()
     }
 
-    override fun onStart() {
-        super.onStart()
-        if(auth.currentUser != null){
-            startActivity(
-                Intent(this, MainActivity::class.java)
-            )
-            finish()
+    private fun setupState(){
+        viewModel.viewState.observe(this){ state ->
+            state.apply {
+                when{
+                    isSuccess -> {
+                        startActivity(
+                            Intent(baseContext, MainActivity::class.java)
+                        )
+                        finish()
+                    }
+                }
+            }
         }
     }
 }

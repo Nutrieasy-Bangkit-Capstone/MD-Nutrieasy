@@ -76,7 +76,7 @@
         android:id="@+id/scanBorder"
         android:layout_width="256dp"
         android:layout_height="256dp"
-        android:background="@drawable/scan_border"
+        android:background="@drawable/bounding_box"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

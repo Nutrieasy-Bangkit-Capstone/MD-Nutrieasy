@@ -46,9 +46,13 @@ class HistoryFragment : Fragment() {
 
     private fun setupView(){
         binding.apply {
-            dateTv.text = if(viewModel.date.isEmpty()){
-                getString(R.string.all_history)
-            }else viewModel.date
+            val dateFormatToString = SimpleDateFormat("yyyy MMMM dd", Locale.US)
+            val dateLong = MaterialDatePicker.todayInUtcMilliseconds()
+            val dateText: String = dateFormatToString.format(Date(dateLong))
+
+            dateTv.text = viewModel.date.ifEmpty {
+                dateText
+            }
 
             adapter = HistoryAdapter(
                 requireContext(),
