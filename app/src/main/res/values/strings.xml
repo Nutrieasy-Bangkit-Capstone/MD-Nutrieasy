@@ -27,9 +27,9 @@
     <string name="_25">25</string>
     <string name="nutrieasy">Nutrieasy</string>
     <string name="track_your_nutrition_easier_with_nutrieasy">Track your nutrition easier \nwith Nutrieasy</string>
-    <string name="birth_of_date">Birth of Date</string>
-    <string name="weight">Weight</string>
-    <string name="height">Height</string>
+    <string name="birth_of_date">Date of Birth</string>
+    <string name="weight">Weight (kg)</string>
+    <string name="height">Height (cm)</string>
     <string name="gender">Gender</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="save_profile">Save Profile</string>
@@ -57,4 +57,5 @@
     <string name="qty">%1$d Qty</string>
     <string name="activity">Activity</string>
     <string name="sugar">Sugar</string>
+    <string name="unknown">Unknown</string>
 </resources>
