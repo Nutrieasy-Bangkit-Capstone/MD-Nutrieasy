@@ -51,9 +51,9 @@ class ItemDetailFragment : Fragment() {
         val calorie = item.nutrientsDetailList.first {
             it.name.contains("Energy") && it.unit == "kcal"
         }
-        binding.calorieTv.text = "${calorie.value.times(item.servingQty)}Kcal / ${item.servingWeightGrams.times(item.servingQty)}"
+        binding.calorieTv.text = "${calorie.value}Kcal / ${item.servingWeightGrams.times(item.servingQty)} gram"
         val nutrientList = item.nutrientsDetailList.map {
-            it.copy(value = it.value * item.servingQty)
+            it.copy(value = it.value)
         }
         binding.amountTv.text = getString(R.string.qty, item.servingQty)
 

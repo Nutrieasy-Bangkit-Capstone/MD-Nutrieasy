@@ -192,7 +192,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/foodIv" />
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/fatPi"
+                android:id="@+id/sugarPi"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:rotation="-90"
@@ -200,35 +200,35 @@
                 app:indicatorTrackGapSize="0dp"
                 app:trackStopIndicatorSize="0dp"
                 app:indicatorColor="@color/red"
-                app:layout_constraintStart_toStartOf="@+id/fatPiv"
-                app:layout_constraintTop_toBottomOf="@+id/fatPiv"
+                app:layout_constraintStart_toStartOf="@+id/sugarPiv"
+                app:layout_constraintTop_toBottomOf="@+id/sugarPiv"
                 app:trackCornerRadius="4dp"
                 app:trackThickness="8dp" />
 
             <TextView
-                android:id="@+id/fatSizeTv"
+                android:id="@+id/sugarSizeTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="@string/size_item"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/fatTv"
-                app:layout_constraintStart_toStartOf="@+id/fatPi" />
+                app:layout_constraintBottom_toTopOf="@+id/sugarTv"
+                app:layout_constraintStart_toStartOf="@+id/sugarPi" />
 
             <TextView
-                android:id="@+id/fatTv"
+                android:id="@+id/sugarTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:text="@string/fat"
+                android:text="@string/sugar"
                 android:textColor="@color/grey"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/fatPiv"
-                app:layout_constraintStart_toStartOf="@+id/fatSizeTv" />
+                app:layout_constraintBottom_toBottomOf="@+id/sugarPiv"
+                app:layout_constraintStart_toStartOf="@+id/sugarSizeTv" />
 
             <View
-                android:id="@+id/fatPiv"
+                android:id="@+id/sugarPiv"
                 android:layout_width="8dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"

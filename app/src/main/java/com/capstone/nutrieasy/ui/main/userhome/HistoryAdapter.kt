@@ -33,7 +33,7 @@ DIFF_CALLBACK
                     it.name.contains("fiber", true)
                 }
                 val fat = item.nutrientsDetailList.find {
-                    it.name.contains("fat", true)
+                    it.name.contains("sugar", true)
                 }
                 val size = item.servingQty * item.servingWeightGrams
 
@@ -56,9 +56,9 @@ DIFF_CALLBACK
                 fiberPi.max = 50 * item.servingQty
                 fiberSizeTv.text = context.getString(R.string.size_item, fiber?.value?.toInt())
 
-                fatPi.progress = fat?.value?.toInt() ?: 0
-                fatPi.max = 50 * item.servingQty
-                fatSizeTv.text = context.getString(R.string.size_item, fat?.value?.toInt())
+                sugarPi.progress = fat?.value?.toInt() ?: 0
+                sugarPi.max = 50 * item.servingQty
+                sugarSizeTv.text = context.getString(R.string.size_item, fat?.value?.toInt())
 
                 binding.root.setOnClickListener{
                     action.onClick(item, binding)
